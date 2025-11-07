@@ -3,7 +3,7 @@
 # Create 3 functions
 
 import numpy as np
-
+import csv
 # Function 1: Read values from a file into an array
 # This function reads numerical values from a text file and stores them in a NumPy array.
 # Example file content:
@@ -11,7 +11,12 @@ import numpy as np
 # 2.5
 # 3.5
 def read_values_from_file(filename):
-    return np.array([])
+    filename='values.txt'
+    file=open(filename, 'r')
+    with open('values.txt', 'r') as file:
+        numbers = [float(line.strip()) for line in file]
+        print(numbers)
+    file.close()
 
 
 # Function 2: Read Oscillatory Wave Data and Compute Statistics
@@ -25,7 +30,18 @@ def read_values_from_file(filename):
 # 3,4
 # 5,6
 def read_oscillatory_wave_data(filename):
-    return np.array([]), 0, 0
+    filename='wave_data.csv'
+
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        array = [list(map(int, row)) for row in reader]
+        amp=[]
+        for row in reader:
+            for value in row:
+                amp.append(float(value))
+            xamp = sum(amp) / len(amp)
+            maxamp = max(amp)
+    return array, xamp, maxamp
 
 
 # Function 3: Read Standing Wave Data and Compute Wave Speed
